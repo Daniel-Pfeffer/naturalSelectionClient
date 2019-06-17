@@ -1,0 +1,22 @@
+<div *ngIf="!simRan">
+    <button mat-button (click)="startSimulation()">Start</button>
+</div>
+<div *ngIf="simRan">
+    <app-generation [genNo]="generationTicker" #generationComponent></app-generation>
+    <form [formGroup]="formGroup">
+        <ng-template matStepLabel>Run more generations</ng-template>
+        <mat-form-field>
+            <label>
+                <input matInput placeholder="Generations to run" formControlName="genToRun" required>
+            </label>
+        </mat-form-field>
+        <div>
+            <button mat-button (click)="runGenerations()">Run</button>
+        </div>
+    </form>
+    <div>
+        <button mat-button (click)="saveProgress()">Save Progress</button>
+    </div>
+    <button mat-button (click)="prev()">prev</button>
+    <button mat-button (click)="next()">next</button>
+</div>

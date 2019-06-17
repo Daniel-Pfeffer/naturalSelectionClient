@@ -1,0 +1,87 @@
+<mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>General Configuration</ng-template>
+            <mat-form-field>
+                <label>
+                    <input matInput placeholder="Starting Population Size" formControlName="startingPop" required>
+                </label>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <label>
+                    <input matInput placeholder="Map Size" formControlName="mapSize" required>
+                </label>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Food Configs</ng-template>
+            <mat-form-field>
+                <label>
+                    <input matInput placeholder="Starting Food Amount" formControlName="foodAmount" required>
+                </label>
+            </mat-form-field>
+            <br>
+            <mat-radio-group formControlName="amountChanges">
+                <mat-label>Food Changes</mat-label>
+                <br><br>
+                <mat-radio-button value="0" checked>No changes</mat-radio-button>
+                <br>
+                <mat-radio-button value="1">Food decreases</mat-radio-button>
+                <br>
+                <mat-radio-button value="2">Food increases</mat-radio-button>
+                <br>
+            </mat-radio-group>
+            <br>
+            <div *ngIf="['1','2'].includes(secondFormGroup.controls.amountChanges.value)">
+                <mat-form-field>
+                    <label>
+                        <input matInput placeholder="Amount Changing" formControlName="amountChanging">
+                    </label>
+                </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="secondFormGroup.controls.amountChanges.value == '1'">
+                    <label>
+                        <input matInput placeholder="Minimum Food" formControlName="minFood">
+                    </label>
+                </mat-form-field>
+                <br *ngIf="secondFormGroup.controls.amountChanges.value == '1'">
+                <mat-form-field *ngIf="secondFormGroup.controls.amountChanges.value == '2'">
+                    <label>
+                        <input matInput placeholder="Maximum Food" formControlName="maxFood">
+                    </label>
+                </mat-form-field>
+            </div>
+            <br>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Generations to run</ng-template>
+            <mat-form-field>
+                <label>
+                    <input matInput placeholder="Generations to run" formControlName="genToRun" required>
+                </label>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+            <button mat-button (click)="close(false)">I don't want a simulation</button>
+            <button mat-button (click)="close(true)">Start a simulation</button>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>
