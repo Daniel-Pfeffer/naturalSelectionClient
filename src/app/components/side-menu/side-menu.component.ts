@@ -17,6 +17,7 @@ export class SideMenuComponent implements OnInit {
     public generationTicker: number;
     private maxGen: number;
     private formGroup: FormGroup;
+    private speedSettings = false;
     @ViewChild('generationComponent', {static: false}) genComp: GenerationComponent;
 
     constructor(private rest: RestService, private data: DataService, private dialog: MatDialog, private builder: FormBuilder) {
@@ -68,9 +69,17 @@ export class SideMenuComponent implements OnInit {
         });
     }
 
+    /*
+     * TODO fix bug with file download
+     */
     saveProgress() {
         this.rest.save().subscribe(() => {
             console.log(`Successfully saved`);
         });
+    }
+
+    speed() {
+        this.speedSettings = !this.speedSettings;
+        this.data.changeSpeed(this.speedSettings);
     }
 }
